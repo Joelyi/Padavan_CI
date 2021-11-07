@@ -21,6 +21,7 @@ var is_mobile = (/iphone|ipod|ipad|iemobile|android|blackberry|fennec/).test(uag
 var new_wan_internet = '<% nvram_get_x("", "link_internet"); %>';
 var id_check_status = 0;
 var id_system_info = 0;
+
 var cookie = {
 	set: function(key, value, days) {
 		document.cookie = cookie_pref + key + '=' + value + '; expires=' +
@@ -34,15 +35,18 @@ var cookie = {
 		document.cookie = cookie_pref + key + '=; expires=' + (new Date(1)).toUTCString() + '; path=/';
 	}
 };
+
 function HashMap() {
 	var length = 0;
 	var obj = new Object();
 	this.isEmpty = function () {
 		return length == 0;
 	};
+
 	this.containsKey = function (key) {
 		return (key in obj);
 	};
+
 	this.containsValue = function (value) {
 		for (var key in obj) {
 			if (obj[key] == value) {
@@ -51,20 +55,24 @@ function HashMap() {
 		}
 		return false;
 	};
+
 	this.put = function (key, value) {
 		if (!this.containsKey(key)) {
 			length++;
 		}
 		obj[key] = value;
 	};
+
 	this.get = function (key) {
 		return this.containsKey(key) ? obj[key] : null;
 	};
+
 	this.remove = function (key) {
 		if (this.containsKey(key) && (delete obj[key])) {
 			length--;
 		}
 	};
+
 	this.values = function () {
 		var _values = new Array();
 		for (var key in obj) {
@@ -72,6 +80,7 @@ function HashMap() {
 		}
 		return _values;
 	};
+
 	this.keySet = function () {
 		var _keys = new Array();
 		for (var key in obj) {
@@ -79,35 +88,45 @@ function HashMap() {
 		}
 		return _keys;
 	};
+
 	this.size = function () {
 		return length;
 	};
+
 	this.clear = function () {
 		length = 0;
 		obj = new Object();
 	};
 }
 <% firmware_caps_hook(); %>
+
 function get_ap_mode(){
 	return (wan_route_x == 'IP_Bridged' || sw_mode == '3') ? true : false;
 }
+
 function unload_body(){
 	disableCheckChangedStatus();
 	no_flash_button();
 	return true;
 }
+
 function enableCheckChangedStatus(flag){
 	var tm_int_sec = 1;
+
 	disableCheckChangedStatus();
+
 	if (new_wan_internet == '0')
 		tm_int_sec = 2;
 	else if (new_wan_internet == '1')
 		tm_int_sec = 5;
+
 	id_check_status = setTimeout("get_changed_status();", tm_int_sec * 1000);
 }
+
 function disableCheckChangedStatus(){
 	clearTimeout(id_check_status);
 }
+
 function update_internet_status(){
 	if (new_wan_internet == '1')
 		showMapWANStatus(1);
@@ -116,15 +135,18 @@ function update_internet_status(){
 	else
 		showMapWANStatus(0);
 }
+
 function notify_status_internet(wan_internet){
 	this.new_wan_internet = wan_internet;
 	if((location.pathname == "/" || location.pathname == "/index.asp") && (typeof(update_internet_status) === 'function'))
 		update_internet_status();
 }
+
 function notify_status_vpn_client(vpnc_state){
 	if((location.pathname == "/vpncli.asp") && (typeof(update_vpnc_status) === 'function'))
 		update_vpnc_status(vpnc_state);
 }
+
 function get_changed_status(){
 	var $j = jQuery.noConflict();
 	$j.ajax({
@@ -142,6 +164,7 @@ function get_changed_status(){
 		}
 	});
 }
+
 function get_system_info(){
 	var $j = jQuery.noConflict();
 	clearTimeout(id_system_info);
@@ -159,12 +182,14 @@ function get_system_info(){
 		}
 	});
 }
+
 function bytesToSize(bytes, precision){
 	var absval = Math.abs(bytes);
 	var kilobyte = 1024;
 	var megabyte = kilobyte * 1024;
 	var gigabyte = megabyte * 1024;
 	var terabyte = gigabyte * 1024;
+
 	if (absval < kilobyte)
 		return bytes + ' B';
 	else if (absval < megabyte)
@@ -176,17 +201,21 @@ function bytesToSize(bytes, precision){
 	else
 		return (bytes / terabyte).toFixed(precision) + ' TB';
 }
+
 function getLALabelStatus(num){
 	var la = parseFloat(num);
 	return la > 0.9 ? 'danger' : (la > 0.5 ? 'warning' : 'info');
 }
+
 function setSystemInfo(response){
 	if(typeof(si_new) !== 'object')
 		return;
+
 	var cpu_now = {};
 	var cpu_total = (si_new.cpu.total - sysinfo.cpu.total);
 	if (!cpu_total)
 		cpu_total = 1;
+
 	cpu_now.busy = parseInt((si_new.cpu.busy - sysinfo.cpu.busy) * 100 / cpu_total);
 	cpu_now.user = parseInt((si_new.cpu.user - sysinfo.cpu.user) * 100 / cpu_total);
 	cpu_now.nice = parseInt((si_new.cpu.nice - sysinfo.cpu.nice) * 100 / cpu_total);
@@ -195,14 +224,18 @@ function setSystemInfo(response){
 	cpu_now.iowait = parseInt((si_new.cpu.iowait - sysinfo.cpu.iowait) * 100 / cpu_total);
 	cpu_now.irq = parseInt((si_new.cpu.irq - sysinfo.cpu.irq) * 100 / cpu_total);
 	cpu_now.sirq = parseInt((si_new.cpu.sirq - sysinfo.cpu.sirq) * 100 / cpu_total);
+
 	sysinfo = si_new;
+
 	showSystemInfo(cpu_now,1);
 }
+
 function showSystemInfo(cpu_now,force){
 	var $j = jQuery.noConflict();
 	var arrLA = sysinfo.lavg.split(' ');
 	var h = sysinfo.uptime.hours < 10 ? ('0'+sysinfo.uptime.hours) : sysinfo.uptime.hours;
 	var m = sysinfo.uptime.minutes < 10 ? ('0'+sysinfo.uptime.minutes) : sysinfo.uptime.minutes;
+
 	$j("#la_info").html('<span class="label label-'+getLALabelStatus(arrLA[0])+'">'+arrLA[0]+'</span>&nbsp;<span class="label label-'+getLALabelStatus(arrLA[1])+'">'+arrLA[1]+'</span>&nbsp;<span class="label label-'+getLALabelStatus(arrLA[2])+'">'+arrLA[2]+'</span>');
 	$j("#cpu_info").html(cpu_now.busy + '%');
 	$j("#mem_info").html(bytesToSize(sysinfo.ram.free*1024, 2) + " / " + bytesToSize(sysinfo.ram.total*1024, 2));
