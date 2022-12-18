@@ -73,8 +73,9 @@ jobs:
     - name: Recovery SSP bin files download from remote
       if: github.event.inputs.ssp == 'true'
       run: |
+        cp -f K1s/PSG1208s.config $WORK_PATH/trunk/configs/templates/PSG1208s.config
         #cp -f K1s/kernel-3.4.x.config $WORK_PATH/trunk/configs/boards/PSG1208/kernel-3.4.x.config
-        #cp -f K1s/defaults.h $WORK_PATH/trunk/user/shared/defaults.h
+        cp -f K1s/defaults.h $WORK_PATH/trunk/user/shared/defaults.h
         cp -f ssp/shadowsocks.sh $WORK_PATH/trunk/user/shadowsocks/scripts
         #cp -f ssp/defaults.c $WORK_PATH/trunk/user/shared
         #cp -f ssp/variables.c $WORK_PATH//trunk/user/httpd
@@ -82,7 +83,6 @@ jobs:
         cd $WORK_PATH/trunk/user/shared
         #sed -i "s#https://cdn.jsdelivr.net/gh/Padavan_CI/ssp/trojan#https://cdn.jsdelivr.net/gh/${{ github.repository_owner }}/Padavan_CI/ssp/trojan#g" ./defaults.c
         #sed -i "s#https://cdn.jsdelivr.net/gh/Padavan_CI/ssp/v2ray#https://cdn.jsdelivr.net/gh/${{ github.repository_owner }}/Padavan_CI/ssp/v2ray#g" ./defaults.c
-        #cp -f K1s/PSG1208s.config $WORK_PATH/trunk/configs/templates/PSG1208s.config
     - name: Update latest adg
       run: |
         cp -f adg/adguardhome.sh $WORK_PATH/trunk/user/adguardhome
