@@ -74,6 +74,7 @@ jobs:
       if: github.event.inputs.ssp == 'true'
       run: |
         cp -f K1/PSG1208.config $WORK_PATH/trunk/configs/templates/PSG1208.config
+        cp -f K1/kernel-3.4.x.config $WORK_PATH/trunk/configs/boards/PSG1208/kernel-3.4.x.config
         cp -f K1/defaults.h $WORK_PATH/trunk/user/shared/defaults.h
         cp -f ssp/shadowsocks.sh $WORK_PATH/trunk/user/shadowsocks/scripts
         #cp -f ssp/defaults.c $WORK_PATH/trunk/user/shared
