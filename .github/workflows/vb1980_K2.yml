@@ -14,6 +14,14 @@ on:
         - 1.24.x
         - 1.34.1
         default: '1.24.x'
+      config:
+        type: boolean
+        description: '是否复制配置文件'
+        default: 'true'
+      theme:
+        type: boolean
+        description: '是否复制主题文件'
+        default: 'true'
       ssp:
         type: boolean
         description: 'whether to apply the patch for download ssp bin from local or remote url'
@@ -70,11 +78,27 @@ jobs:
         sed -i "s/SRC_NAME=busybox.*/SRC_NAME=busybox-${{ github.event.inputs.busyboxver }}/g" ./Makefile
         cd $WORK_PATH/trunk
         sed -i "s/busybox_id=.*/busybox_id=\"${{ github.event.inputs.busyboxver }}\"/g" ./build_firmware_modify
+    - name: Recovery config bin files download from remote
+      if: github.event.inputs.config == 'true'
+      run: |
+        cp -f PSG1218/PSG1218.config $WORK_PATH/trunk/configs/templates/PSG1218s.config
+        #cp -f PSG1218/kernel-3.4.x.config $WORK_PATH/trunk/configs/boards/PSG1218/kernel-3.4.x.config
+        cp -f PSG1218/defaults.h $WORK_PATH/trunk/user/shared/defaults.h
+        #cd $WORK_PATH/trunk/tools
+        #sed -i "s#1.15.2#1.17.1#g" ./Makefile
+        #sed -i "s#https://gomirrors.org#https://dl.google.com#g" ./Makefile
+        echo "复制配置文件结束"  
+    - name: Recovery config theme files download from remote
+      if: github.event.inputs.theme == 'true'
+      run: |
+        cd $WORK_PATH/trunk/user/www/n56u_ribbon_fixed
+        sudo rm -rf bootstrap
+        sudo rm -rf images
+        cp -rf PHICOMM_theme/. $WORK_PATH/trunk/user/www/n56u_ribbon_fixed
+        echo "复制主题文件结束"  
     - name: Recovery SSP bin files download from remote
       if: github.event.inputs.ssp == 'true'
       run: |
-        cp -f K2/PSG1218.config $WORK_PATH/trunk/configs/templates/PSG1218.config
-        cp -f K2/defaults.h $WORK_PATH/trunk/user/shared/defaults.h
         cp -f ssp/shadowsocks.sh $WORK_PATH/trunk/user/shadowsocks/scripts
         #cp -f ssp/defaults.c $WORK_PATH/trunk/user/shared
         #cp -f ssp/variables.c $WORK_PATH//trunk/user/httpd
