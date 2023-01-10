@@ -81,9 +81,9 @@ jobs:
     - name: Recovery config bin files download from remote
       if: github.event.inputs.config == 'true'
       run: |
-        cp -f PSG1208/PSG1208.config $WORK_PATH/trunk/configs/templates/PSG1208.config
-        cp -f PSG1208/kernel-3.4.x.config $WORK_PATH/trunk/configs/boards/PSG1208/kernel-3.4.x.config
-        cp -f PSG1208/defaults.h $WORK_PATH/trunk/user/shared/defaults.h
+        cp -f PSG1208/PSG1208.config $WORK_PATH/trunk/configs/templates
+        cp -f PSG1208/kernel-3.4.x.config $WORK_PATH/trunk/configs/boards/PSG1208
+        cp -f PSG1208/defaults.h $WORK_PATH/trunk/user/shared
         #cd $WORK_PATH/trunk/tools
         #sed -i "s#1.15.2#1.17.1#g" ./Makefile
         #sed -i "s#https://gomirrors.org#https://dl.google.com#g" ./Makefile
