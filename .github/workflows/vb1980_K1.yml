@@ -91,10 +91,10 @@ jobs:
     - name: Recovery config theme files download from remote
       if: github.event.inputs.theme == 'true'
       run: |
-        cd $WORK_PATH/trunk/user/www/n56u_ribbon_fixed
-        sudo rm -rf bootstrap
-        sudo rm -rf images
-        cp -rf PHICOMM_theme/. $WORK_PATH/trunk/user/www/n56u_ribbon_fixed
+        cp -r PHICOMM_theme  $WORK_PATH/
+        sudo rm -rf $WORK_PATH/trunk/user/www/n56u_ribbon_fixed/bootstrap
+        sudo rm -rf $WORK_PATH/trunk/user/www/n56u_ribbon_fixed/images
+        cp -rf $WORK_PATH/PHICOMM_theme/. $WORK_PATH/trunk/user/www/n56u_ribbon_fixed
         echo "复制主题文件结束"  
     - name: Recovery SSP bin files download from remote
       if: github.event.inputs.ssp == 'true'
