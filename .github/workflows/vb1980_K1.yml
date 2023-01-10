@@ -16,19 +16,19 @@ on:
         default: '1.24.x'
       config:
         type: boolean
-        description: '是否复制配置文件'
+        description: '是否替换配置文件'
         default: 'true'
       theme:
         type: boolean
-        description: '是否复制主题文件'
+        description: '是否替换主题文件'
         default: 'true'
       ssp:
         type: boolean
-        description: 'whether to apply the patch for download ssp bin from local or remote url'
+        description: '是否替换ssp文件'
         default: 'true'
       uploadwet:
         type: boolean
-        description: 'whether to upload firmware to wetransfer'
+        description: '是否上传至wetransfer'
         default: 'true'
       pushplus:
         type: boolean
