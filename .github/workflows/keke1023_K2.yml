@@ -1,4 +1,4 @@
-name: Build K1 kvr from keke1023 kvr repo
+name: Build K2 kvr from keke1023 kvr repo
 
 on:
   workflow_dispatch:
