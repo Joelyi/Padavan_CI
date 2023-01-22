@@ -21,11 +21,15 @@ on:
       theme:
         type: boolean
         description: '是否替换主题文件'
-        default: 'true'
+        default: 'false'
       ssp:
         type: boolean
         description: '是否替换ssp文件'
-        default: 'true'
+        default: 'false'
+      adg:
+        type: boolean
+        description: '是否替换ssp文件'
+        default: 'false'
       uploadwet:
         type: boolean
         description: '是否上传至wetransfer'
@@ -86,7 +90,7 @@ jobs:
         cp -f PSG1208/defaults.h $WORK_PATH/trunk/user/shared
         #cd $WORK_PATH/trunk/tools
         #sed -i "s#1.15.2#1.17.1#g" ./Makefile
-        #sed -i "s#https://gomirrors.org#https://dl.google.com#g" ./Makefile
+        #sed -i "s#https://golang.google.cn/dl#https://dl.google.com/go#g" ./Makefile
         echo "复制配置文件结束"  
     - name: Recovery config theme files download from remote
       if: github.event.inputs.theme == 'true'
@@ -106,6 +110,7 @@ jobs:
         cd $WORK_PATH/trunk/user/shared
         #sed -i "s#https://cdn.jsdelivr.net/gh/Padavan_CI/ssp/trojan#https://cdn.jsdelivr.net/gh/${{ github.repository_owner }}/Padavan_CI/ssp/trojan#g" ./defaults.c
         #sed -i "s#https://cdn.jsdelivr.net/gh/Padavan_CI/ssp/v2ray#https://cdn.jsdelivr.net/gh/${{ github.repository_owner }}/Padavan_CI/ssp/v2ray#g" ./defaults.c
+        echo "复制SSP文件结束"  
     - name: Update latest adg
       run: |
         cp -f adg/adguardhome.sh $WORK_PATH/trunk/user/adguardhome
@@ -114,6 +119,7 @@ jobs:
         cp -f adg/Advanced_adguardhome.asp $WORK_PATH/trunk/user/www/n56u_ribbon_fixed
         #cd $WORK_PATH/trunk/user/adguardhome
         #sed -i "s#https://cdn.jsdelivr.net/gh/chongshengB/rt-n56u/trunk/user/adguardhome/AdGuardHome#https://cdn.jsdelivr.net/gh/${{ github.repository_owner }}/Padavan_CI/adg/AdGuardHome#g" ./adguardhome.sh
+        echo "复制adguardhome文件结束"
     - name: Custom config
       run: |
         cd $WORK_PATH/trunk
