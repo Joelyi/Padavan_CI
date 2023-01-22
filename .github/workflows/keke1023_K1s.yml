@@ -1,4 +1,4 @@
-name: Build K1s kvr from keke1023 kvr repo
+name: Build K1 kvr from keke1023 kvr repo
 
 on:
   workflow_dispatch:
@@ -25,7 +25,11 @@ on:
       ssp:
         type: boolean
         description: '是否替换ssp文件'
-        default: 'true'
+        default: 'false'
+      adg:
+        type: boolean
+        description: '是否替换ssp文件'
+        default: 'false'
       uploadwet:
         type: boolean
         description: '是否上传至wetransfer'
@@ -39,7 +43,7 @@ env:
   TOOLCHAIN_URL: https://github.com/hanwckf/padavan-toolchain/releases/download/v1.1/mipsel-linux-uclibc.tar.xz
   WORK_PATH: /opt/rt-n56u
   TIME_ZONE: Asia/Shanghai
-  TARGET_NAME: PSG1208s
+  TARGET_NAME: PSG1208
   FIRMWARE_DATEPREFIX: $(date +"%Y%m%d")
   FIRMWARE_AUTHOR: keke1023
   FIRMWARE_PATH: /opt/firmwares
@@ -106,6 +110,7 @@ jobs:
         cd $WORK_PATH/trunk/user/shared
         #sed -i "s#https://cdn.jsdelivr.net/gh/Padavan_CI/ssp/trojan#https://cdn.jsdelivr.net/gh/${{ github.repository_owner }}/Padavan_CI/ssp/trojan#g" ./defaults.c
         #sed -i "s#https://cdn.jsdelivr.net/gh/Padavan_CI/ssp/v2ray#https://cdn.jsdelivr.net/gh/${{ github.repository_owner }}/Padavan_CI/ssp/v2ray#g" ./defaults.c
+        echo "复制SSP文件结束"  
     - name: Update latest adg
       run: |
         cp -f adg/adguardhome.sh $WORK_PATH/trunk/user/adguardhome
@@ -114,6 +119,7 @@ jobs:
         cp -f adg/Advanced_adguardhome.asp $WORK_PATH/trunk/user/www/n56u_ribbon_fixed
         #cd $WORK_PATH/trunk/user/adguardhome
         #sed -i "s#https://cdn.jsdelivr.net/gh/chongshengB/rt-n56u/trunk/user/adguardhome/AdGuardHome#https://cdn.jsdelivr.net/gh/${{ github.repository_owner }}/Padavan_CI/adg/AdGuardHome#g" ./adguardhome.sh
+        echo "复制adguardhome文件结束"
     - name: Custom config
       run: |
         cd $WORK_PATH/trunk
