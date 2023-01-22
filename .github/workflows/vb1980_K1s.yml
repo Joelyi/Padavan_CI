@@ -112,6 +112,7 @@ jobs:
         #sed -i "s#https://cdn.jsdelivr.net/gh/Padavan_CI/ssp/v2ray#https://cdn.jsdelivr.net/gh/${{ github.repository_owner }}/Padavan_CI/ssp/v2ray#g" ./defaults.c
         echo "复制SSP文件结束"  
     - name: Update latest adg
+      if: github.event.inputs.adg == 'true'
       run: |
         cp -f adg/adguardhome.sh $WORK_PATH/trunk/user/adguardhome
         #cp -f adg/defaults.c $WORK_PATH/trunk/user/shared
