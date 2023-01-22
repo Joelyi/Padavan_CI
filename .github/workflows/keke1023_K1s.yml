@@ -86,6 +86,8 @@ jobs:
       if: github.event.inputs.config == 'true'
       run: |
         cp -f PSG1208s/PSG1208s.config $WORK_PATH/trunk/configs/templates
+        cp -f PSG1208s/board.h $WORK_PATH/trunk/configs/boards/PSG1208
+        cp -f PSG1208s/board.mk $WORK_PATH/trunk/configs/boards/PSG1208
         cp -f PSG1208s/kernel-3.4.x.config $WORK_PATH/trunk/configs/boards/PSG1208
         cp -f PSG1208s/defaults.h $WORK_PATH/trunk/user/shared
         #cd $WORK_PATH/trunk/tools
