@@ -25,7 +25,11 @@ on:
       ssp:
         type: boolean
         description: '是否替换ssp文件'
-        default: 'true'
+        default: 'false'
+      adg:
+        type: boolean
+        description: '是否替换ssp文件'
+        default: 'false'
       uploadwet:
         type: boolean
         description: '是否上传至wetransfer'
