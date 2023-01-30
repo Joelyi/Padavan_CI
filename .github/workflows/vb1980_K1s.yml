@@ -86,7 +86,9 @@ jobs:
       if: github.event.inputs.config == 'true'
       run: |
         cp -f PSG1208s/PSG1208s.config $WORK_PATH/trunk/configs/templates
-        cp -f PSG1208s/kernel-3.4.x.config $WORK_PATH/trunk/configs/boards/PSG1208
+        cp -f PSG1208s/board.h $WORK_PATH/trunk/configs/boards/PSG1218
+        cp -f PSG1208s/board.mk $WORK_PATH/trunk/configs/boards/PSG1218
+        cp -f PSG1208s/kernel-3.4.x.config $WORK_PATH/trunk/configs/boards/PSG1218
         cp -f PSG1208s/defaults.h $WORK_PATH/trunk/user/shared
         #cd $WORK_PATH/trunk/tools
         #sed -i "s#1.15.2#1.17.1#g" ./Makefile
@@ -228,8 +230,8 @@ jobs:
         #格式如下：
         #sed -i '/自定义项/d' .config
         #echo "自定义项=y" >> .config
-        sed -i "s/FIRMWARE_BUILDS_REV=.*/FIRMWARE_BUILDS_REV=${{ github.event.inputs.firmwarever }}/g" ./versions.inc
-        echo '更新版本号时间'
+        #sed -i "s/FIRMWARE_BUILDS_REV=.*/FIRMWARE_BUILDS_REV=${{ github.event.inputs.firmwarever }}/g" ./versions.inc
+        #echo '更新版本号时间'
         #########################################################################################
     - name: Build firmware
       run: |
