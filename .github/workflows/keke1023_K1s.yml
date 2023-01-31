@@ -99,10 +99,10 @@ jobs:
     - name: update configuration
       id: configuration
       run: |
-        cp -f $WORK_PATH/trunk/configs/boards/PSG1218/kernel-3.4.x.config $WORK_PATH/trunk/linux-3.4.x/.config
+        cp -f PSG1208s/.config $WORK_PATH/trunk/linux-3.4.x/.config
         cd $WORK_PATH/trunk/linux-3.4.x
         make oldconfig
-        mv -f $WORK_PATH/trunk/linux-3.4.x/.config $WORK_PATH/trunk/configs/boards/PSG1218/kernel-3.4.x.config
+        #mv -f $WORK_PATH/trunk/linux-3.4.x/.config $WORK_PATH/trunk/configs/boards/PSG1218/kernel-3.4.x.config
     - name: Recovery config theme files download from remote
       if: github.event.inputs.theme == 'true'
       run: |
