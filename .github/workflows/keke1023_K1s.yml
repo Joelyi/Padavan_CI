@@ -86,9 +86,9 @@ jobs:
       if: github.event.inputs.config == 'true'
       run: |
         cp -f PSG1208s/PSG1208s.config $WORK_PATH/trunk/configs/templates/PSG1208s.config
-        cp -f PSG1208s/board.h $WORK_PATH/trunk/configs/boards/PSG1218/board.h
-        cp -f PSG1208s/board.mk $WORK_PATH/trunk/configs/boards/PSG1218/board.mk
-        cp -f PSG1208s/kernel-3.4.x.config $WORK_PATH/trunk/configs/boards/PSG1218/kernel-3.4.x.config
+        cp -f PSG1208s/board.h $WORK_PATH/trunk/configs/boards/PSG1208s/board.h
+        cp -f PSG1208s/board.mk $WORK_PATH/trunk/configs/boards/PSG1208s/board.mk
+        cp -f PSG1208s/kernel-3.4.x.config $WORK_PATH/trunk/configs/boards/PSG1208s/kernel-3.4.x.config
         cp -f PSG1208s/defaults.h $WORK_PATH/trunk/user/shared/defaults.h
         cp -f PSG1208s/Makefile $WORK_PATH/trunk/linux-3.4.x/drivers/net/wireless/ralink/mt76x2_ap/Makefile
         #cd $WORK_PATH/trunk/tools
