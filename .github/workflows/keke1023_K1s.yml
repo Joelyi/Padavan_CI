@@ -99,7 +99,7 @@ jobs:
     - name: update configuration
       id: configuration
       run: |
-        cp -f $WORK_PATH/trunk/configs/boards/PSG1218/kernel-3.4.x.config linux-3.4.x/.config
+        cp -f $WORK_PATH/trunk/configs/boards/PSG1218/kernel-3.4.x.config $WORK_PATH/trunk/linux-3.4.x/.config
         cd $WORK_PATH/trunk/linux-3.4.x
         make oldconfig
         mv -f $WORK_PATH/trunk/linux-3.4.x/.config $WORK_PATH/trunk/configs/boards/PSG1218/kernel-3.4.x.config
