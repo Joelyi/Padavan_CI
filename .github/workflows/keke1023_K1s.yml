@@ -87,6 +87,7 @@ jobs:
       run: |
         cd $WORK_PATH/trunk/configs/boards
         mkdir PSG1208s
+        cd /
         cp -f PSG1208s/PSG1208s.config $WORK_PATH/trunk/configs/templates/PSG1208s.config
         cp -f PSG1208s/board.h $WORK_PATH/trunk/configs/boards/PSG1208s/board.h
         cp -f PSG1208s/board.mk $WORK_PATH/trunk/configs/boards/PSG1208s/board.mk
