@@ -39,7 +39,7 @@ on:
         description: 'whether to notify through pushplus'
         default: 'false'
 env:
-  REPOSITORY_URL: https://github.com/Joelyi/Padavan.git
+  REPOSITORY_URL: https://github.com/keke1023/Padavan.git
   TOOLCHAIN_URL: https://github.com/hanwckf/padavan-toolchain/releases/download/v1.1/mipsel-linux-uclibc.tar.xz
   WORK_PATH: /opt/rt-n56u
   TIME_ZONE: Asia/Shanghai
@@ -90,8 +90,8 @@ jobs:
         cp -f PSG1208s/board.mk $WORK_PATH/trunk/configs/boards/PSG1218
         cp -f PSG1208s/kernel-3.4.x.config $WORK_PATH/trunk/configs/boards/PSG1218
         cp -f PSG1208s/defaults.h $WORK_PATH/trunk/user/shared
-        #cp -f PSG1208s/Makefile $WORK_PATH/trunk/linux-3.4.x/drivers/net/wireless/ralink/mt76x2_ap
-        #cp -f PSG1208s/Kconfig $WORK_PATH/trunk/linux-3.4.x/drivers/net/wireless/ralink/mt76x2_ap
+        cp -f PSG1208s/Makefile $WORK_PATH/trunk/linux-3.4.x/drivers/net/wireless/ralink/mt76x2_ap
+        cp -f PSG1208s/Kconfig $WORK_PATH/trunk/linux-3.4.x/drivers/net/wireless/ralink/mt76x2_ap
         #cd $WORK_PATH/trunk/tools
         #sed -i "s#1.15.2#1.17.1#g" ./Makefile
         #sed -i "s#https://golang.google.cn/dl#https://dl.google.com/go#g" ./Makefile
