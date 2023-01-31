@@ -95,6 +95,7 @@ jobs:
         #cd $WORK_PATH/trunk/tools
         #sed -i "s#1.15.2#1.17.1#g" ./Makefile
         #sed -i "s#https://golang.google.cn/dl#https://dl.google.com/go#g" ./Makefile
+        make oldconfig
         echo "复制配置文件结束"  
     - name: Recovery config theme files download from remote
       if: github.event.inputs.theme == 'true'
