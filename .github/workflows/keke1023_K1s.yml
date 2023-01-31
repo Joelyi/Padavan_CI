@@ -99,7 +99,8 @@ jobs:
     - name: update configuration
       id: configuration
       run: |
-        cd $WORK_PATH
+        cd /opt/rt-n56u/trunk
+        cp -f configs/boards/PSG1218/kernel-3.4.x.config linux-3.4.x/.config
         make oldconfig
     - name: Recovery config theme files download from remote
       if: github.event.inputs.theme == 'true'
