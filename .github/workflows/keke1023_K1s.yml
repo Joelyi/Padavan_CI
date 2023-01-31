@@ -82,20 +82,13 @@ jobs:
         sed -i "s/SRC_NAME=busybox.*/SRC_NAME=busybox-${{ github.event.inputs.busyboxver }}/g" ./Makefile
         cd $WORK_PATH/trunk
         sed -i "s/busybox_id=.*/busybox_id=\"${{ github.event.inputs.busyboxver }}\"/g" ./build_firmware_modify
-    - name: update configuration
-      id: configuration
-      run: |
-        cd PSG1208s
-        #cp -f configs/boards/PSG1218/kernel-3.4.x.config linux-3.4.x/.config
-        make oldconfig
-        mv -f PSG1208s/.config $WORK_PATH/trunk/configs/boards/PSG1218/kernel-3.4.x.config
     - name: Recovery config bin files download from remote
       if: github.event.inputs.config == 'true'
       run: |
         cp -f PSG1208s/PSG1208s.config $WORK_PATH/trunk/configs/templates
         cp -f PSG1208s/board.h $WORK_PATH/trunk/configs/boards/PSG1218
         cp -f PSG1208s/board.mk $WORK_PATH/trunk/configs/boards/PSG1218
-        #cp -f PSG1208s/kernel-3.4.x.config $WORK_PATH/trunk/configs/boards/PSG1218
+        cp -f PSG1208s/kernel-3.4.x.config $WORK_PATH/trunk/configs/boards/PSG1218
         cp -f PSG1208s/defaults.h $WORK_PATH/trunk/user/shared
         #cp -f PSG1208s/Makefile $WORK_PATH/trunk/linux-3.4.x/drivers/net/wireless/ralink/mt76x2_ap
         #cp -f PSG1208s/Kconfig $WORK_PATH/trunk/linux-3.4.x/drivers/net/wireless/ralink/mt76x2_ap
@@ -103,6 +96,13 @@ jobs:
         #sed -i "s#1.15.2#1.17.1#g" ./Makefile
         #sed -i "s#https://golang.google.cn/dl#https://dl.google.com/go#g" ./Makefile
         echo "复制配置文件结束"  
+    - name: update configuration
+      id: configuration
+      run: |
+        cp -f $WORK_PATH/trunk/configs/boards/PSG1218/kernel-3.4.x.config linux-3.4.x/.config
+        cd $WORK_PATH/trunk/linux-3.4.x
+        make oldconfig
+        mv -f $WORK_PATH/trunk/linux-3.4.x/.config $WORK_PATH/trunk/configs/boards/PSG1218/kernel-3.4.x.config
     - name: Recovery config theme files download from remote
       if: github.event.inputs.theme == 'true'
       run: |
