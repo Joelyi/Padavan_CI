@@ -68,8 +68,8 @@ jobs:
       run: |
         git clone --depth=1 $REPOSITORY_URL $WORK_PATH
         cd $WORK_PATH/toolchain-mipsel
-        curl -O -L  $TOOLCHAIN_URL
         mkdir -p toolchain-3.4.x
+        curl -O -L  $TOOLCHAIN_URL
         tar -Jxvf mipsel-linux-uclibc-gcc10-uClibcng1052.tar.xz -C toolchain-mipsel/toolchain-3.4.x
     - name: Set golang
       run: |
