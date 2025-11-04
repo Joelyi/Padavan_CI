@@ -70,7 +70,7 @@ jobs:
         cd $WORK_PATH/toolchain-mipsel
         mkdir -p toolchain-3.4.x
         curl -O -L  $TOOLCHAIN_URL
-        tar -Jxvf mipsel-linux-uclibc-gcc10-uClibcng1052.tar.xz -C toolchain-mipsel/toolchain-3.4.x
+        tar -xvf mipsel-linux-uclibc-gcc10-uClibcng1052.tar.xz -C toolchain-mipsel/toolchain-3.4.x
     - name: Set golang
       run: |
         cp -f bashScripts/go.sh $(pwd)
