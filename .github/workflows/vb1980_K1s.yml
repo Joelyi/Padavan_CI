@@ -6,7 +6,7 @@ on:
       firmwarever:
         description: 'firmware''s version'
         required: true
-        default: '20201015'
+        default: 'build'
       busyboxver:
         type: choice
         description: 'busybox''s version'
@@ -30,10 +30,6 @@ on:
         type: boolean
         description: '是否替换adguardhome文件'
         default: 'false'
-      uploadwet:
-        type: boolean
-        description: '是否上传至wetransfer'
-        default: 'true'
       pushplus:
         type: boolean
         description: 'whether to notify through pushplus'
@@ -44,9 +40,7 @@ env:
   WORK_PATH: /opt/rt-n56u
   TIME_ZONE: Asia/Shanghai
   TARGET_NAME: PSG1208s
-  FIRMWARE_DATEPREFIX: $(date +"%Y%m%d")
-  FIRMWARE_AUTHOR: vb1980
-  FIRMWARE_PATH: /opt/firmwares
+
 jobs:
   build:
     runs-on: ubuntu-22.04
@@ -60,17 +54,19 @@ jobs:
         DEBIAN_FRONTEND: noninteractive
       run: |
         sudo apt-get update
-        sudo apt-get -y install unzip libtool-bin curl cmake gperf gawk flex bison nano xxd fakeroot kmod \
-        cpio git python3-docutils gettext automake autopoint texinfo build-essential help2man \
-        pkg-config zlib1g-dev libgmp3-dev libmpc-dev libmpfr-dev libncurses5-dev libltdl-dev wget libc-dev-bin
+        sudo apt install unzip libtool-bin curl cmake gperf gawk flex bison nano xxd \
+        fakeroot kmod cpio git python3-docutils gettext automake liblzma-dev autopoint \
+        texinfo build-essential help2man pkg-config zlib1g-dev libgmp3-dev \
+        libmpc-dev libmpfr-dev libncurses5-dev libltdl-dev wget libc-dev-bin libev-dev \
+        libssl-dev liblzo2-dev libpam0g-dev libevent-dev
         sudo timedatectl set-timezone "$TIME_ZONE"
     - name: Clone source code
       run: |
         git clone --depth=1 $REPOSITORY_URL $WORK_PATH
-        cd $WORK_PATH/toolchain-mipsel
-        mkdir -p toolchain-3.4.x
+        cd  $WORK_PATH/toolchain-mipsel
         curl -O -L  $TOOLCHAIN_URL
-        tar -xvf mipsel-linux-uclibc-gcc10-uClibcng1052.tar.xz -C toolchain-mipsel/toolchain-3.4.x
+        mkdir -p toolchain-3.4.x
+        tar -xvf mipsel-linux-uclibc-gcc10-uClibcng1052.tar.xz -C toolchain-3.4.x
     - name: Set golang
       run: |
         cp -f bashScripts/go.sh $(pwd)
@@ -203,7 +199,7 @@ jobs:
         echo "CONFIG_FIRMWARE_INCLUDE_ADBYBY=n" >> .config #adbyby plus+
         echo "CONFIG_FIRMWARE_INCLUDE_KOOLPROXY=n" >> .config #KP广告过滤
         #
-        echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNS=n" >> .config #smartdns
+        echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNS=y" >> .config #smartdns
         echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNSBIN=n" >> .config #smartdns二进制文件
         echo "CONFIG_FIRMWARE_INCLUDE_ADGUARDHOME=n" >> .config
         #
@@ -244,38 +240,17 @@ jobs:
       run: |
         cd $WORK_PATH/trunk
         sudo ./clear_tree
-        sudo ./build_firmware_modify $TARGET_NAME 0
-        echo "FIRMWARE_DATEPREFIX=$(date +"%Y%m%d")" >> $GITHUB_ENV
-    - name: Organize firmware files
-      id: organize
-      run: |
-        mkdir -p $FIRMWARE_PATH/
-        cd $WORK_PATH/trunk/images
-        for firmwarefile in $(ls *.trx)
-        do sudo mv $firmwarefile $FIRMWARE_PATH/${FIRMWARE_DATEPREFIX}"_"${FIRMWARE_AUTHOR}"_"$firmwarefile
-        done
-        cd $FIRMWARE_PATH
-        echo "FIRMWARE=$PWD" >> $GITHUB_ENV
-        echo "::set-output name=status::success"
-    - name : Upload packages
+        sudo ./build_firmware_modify $TNAME 0
+        sudo mv -f images/*.trx /opt/images/${TNAME}_vb1980_${{ steps.current-time.outputs.formattedTime }}.trx
+        cp -f .config /opt/images/${TNAME}.config
+        echo "FNAME=$TNAME" >> $GITHUB_ENV
+        echo "BUILDDONE=success" >> $GITHUB_ENV
+    - name: Upload packages - push to artifact file
       uses: actions/upload-artifact@main
-      if: steps.organize.outputs.status == 'success'
+      if: env.BUILDDONE == 'success'
       with:
-        name: Padavan-packages
-        path: ${{ env.FIRMWARE }}
-    - name: Upload firmware to WeTransfer
-      if: steps.organize.outputs.status == 'success' && github.event.inputs.uploadwet == 'true'
-      run: |
-        curl -fsSL git.io/file-transfer | sh
-        ./transfer wet -s -p 16 --no-progress ${FIRMWARE} 2>&1 | tee wetransfer.log
-        echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep -o -E "https?://[a-zA-Z0-9\.\/_&=@$%?~#-]*")"
-        echo "WETRANSFER_URL=$(cat wetransfer.log | grep -o -E "https?://[a-zA-Z0-9\.\/_&=@$%?~#-]*")" >> $GITHUB_ENV
-    - name: Remove obsolete firmwares on artifacts
-      uses: c-hive/gha-remove-artifacts@v1.2.0
-      if: steps.organizer.outputs.status == 'success'
-      with:
-        age: '1 day'
-        skip-recent: 5
+        name: vb1980_K1s-Padavan-packages
+        path: /opt/images
     - name: PushPlus Notification
       uses: vb1980/Action_PushPlus@master
       if: steps.organize.outputs.status == 'success' && github.event.inputs.pushplus == 'true'
