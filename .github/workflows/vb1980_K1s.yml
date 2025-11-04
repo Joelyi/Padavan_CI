@@ -40,7 +40,7 @@ on:
         default: 'false'
 env:
   REPOSITORY_URL: https://github.com/vb1980/Padavan-KVR.git
-  TOOLCHAIN_URL: https://github.com/vb1980/Padavan_CI/toolchain/mipsel-linux-uclibc-gcc10-uClibcng1052.tar.xz
+  TOOLCHAIN_URL: https://github.com/vb1980/Padavan_CI/blob/main/toolchain/mipsel-linux-uclibc-gcc10-uClibcng1052.tar.xz
   WORK_PATH: /opt/rt-n56u
   TIME_ZONE: Asia/Shanghai
   TARGET_NAME: PSG1208s
