@@ -83,17 +83,20 @@ jobs:
         cd $WORK_PATH/trunk/configs/boards
         mkdir PSG1208s
     - name: Recovery config bin files download from remote
+      run: |
+        cp -f Padavan/libssl/Makefile $WORK_PATH/trunk/libs/libssl/Makefile
+        cp -f Padavan/libcurl/Makefile $WORK_PATH/trunk/libs/libcurl/Makefile
+        cp -r Padavan/ipset  $WORK_PATH/
+        cd $WORK_PATH/trunk/user/ipset
+        sudo rm -rf $WORK_PATH/trunk/user/ipset
+        cp -rf $WORK_PATH/ipset/. $WORK_PATH/trunk/user/ipset
+    - name: Recovery config bin files download from remote
       if: github.event.inputs.config == 'true'
       run: |
         cp -f PSG1208s/PSG1208s.config $WORK_PATH/trunk/configs/templates/PSG1208s.config
         cp -f PSG1208s/board.h $WORK_PATH/trunk/configs/boards/PSG1208s/board.h
         cp -f PSG1208s/board.mk $WORK_PATH/trunk/configs/boards/PSG1208s/board.mk
         cp -f PSG1208s/kernel-3.4.x.config $WORK_PATH/trunk/configs/boards/PSG1208s/kernel-3.4.x.config
-        cp -f PSG1208s/defaults.h $WORK_PATH/trunk/user/shared/defaults.h
-        cp -f PSG1208s/asus_logo.png $WORK_PATH/trunk/user/www/n56u_ribbon_fixed/bootstrap/img/asus_logo.png
-        cp -f PSG1208s/main.css $WORK_PATH/trunk/user/www/n56u_ribbon_fixed/bootstrap/css/main.css
-        cp -f Padavan/libssl/Makefile $WORK_PATH/trunk/libs/libssl/Makefile
-        cp -f Padavan/libcurl/Makefile $WORK_PATH/trunk/libs/libcurl/Makefile
         #cd $WORK_PATH/trunk/tools
         #sed -i "s#1.15.2#1.17.1#g" ./Makefile
         #sed -i "s#https://golang.google.cn/dl#https://dl.google.com/go#g" ./Makefile
