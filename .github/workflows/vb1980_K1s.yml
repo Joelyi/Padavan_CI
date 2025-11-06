@@ -84,13 +84,8 @@ jobs:
         mkdir PSG1208s
     - name: Recovery Padavan files download from remote
       run: |
-        cp -f Padavan/libssl/Makefile $WORK_PATH/trunk/libs/libssl/Makefile
-        cp -f Padavan/libcurl/Makefile $WORK_PATH/trunk/libs/libcurl/Makefile
-        cp -r Padavan/ipset  $WORK_PATH/
-        cd $WORK_PATH/trunk/user/ipset
-        sudo rm -rf $WORK_PATH/trunk/user/ipset
-        cp -rf $WORK_PATH/ipset/. $WORK_PATH/trunk/user/ipset
-        echo "更改Padavan文件结束"  
+        cd padavan
+        sh install_Padavan-Setconfig.sh
     - name: Recovery config bin files download from remote
       if: github.event.inputs.config == 'true'
       run: |
