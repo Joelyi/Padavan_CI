@@ -67,6 +67,7 @@ jobs:
         curl -O -L  $TOOLCHAIN_URL
         mkdir -p toolchain-3.4.x
         tar -xvf mipsel-linux-uclibc.tar.xz -C toolchain-3.4.x
+        mkdir -p /opt/images/
     - name: Set golang
       run: |
         cp -f bashScripts/go.sh $(pwd)
