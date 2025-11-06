@@ -84,8 +84,8 @@ jobs:
         mkdir PSG1208s
     - name: Recovery Padavan files download from remote
       run: |
-        cp -r padavan  $WORK_PATH/
-        cd $WORK_PATH/padavan
+        #cp -r padavan  $WORK_PATH/
+        cd Padavan
         sh install_Padavan-Setconfig.sh
     - name: Recovery config bin files download from remote
       if: github.event.inputs.config == 'true'
