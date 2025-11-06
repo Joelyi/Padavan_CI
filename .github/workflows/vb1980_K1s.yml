@@ -127,7 +127,7 @@ jobs:
         #cd $WORK_PATH/trunk/user/adguardhome
         #sed -i "s#https://cdn.jsdelivr.net/gh/chongshengB/rt-n56u/trunk/user/adguardhome/AdGuardHome#https://cdn.jsdelivr.net/gh/${{ github.repository_owner }}/Padavan_CI/adg/AdGuardHome#g" ./adguardhome.sh
         echo "复制adguardhome文件结束"
-    - name: Custom config
+    - name: Build firmware
       run: |
         cd $WORK_PATH/trunk
         if [ ! -f configs/templates/$TARGET_NAME.config ] ; then
@@ -237,14 +237,11 @@ jobs:
         #sed -i "s/FIRMWARE_BUILDS_REV=.*/FIRMWARE_BUILDS_REV=${{ github.event.inputs.firmwarever }}/g" ./versions.inc
         #echo '更新版本号时间'
         #########################################################################################
-    - name: Build firmware
-      run: |
-        cd $WORK_PATH/trunk
         sudo ./clear_tree
         sudo ./build_firmware_modify $TARGET_NAME 0
-        sudo mv -f images/*.trx /opt/images/${TNAME}_vb1980_${{ steps.current-time.outputs.formattedTime }}.trx
+        sudo mv -f images/*.trx /opt/images/${TARGET_NAME}_Yh793-ChongshengB_${{ steps.current-time.outputs.formattedTime }}.trx
         cp -f .config /opt/images/${TARGET_NAME}.config
-        echo "FNAME=$TARGET_NAME" >> $GITHUB_ENV
+        echo "FNAME=${TARGET_NAME}" >> $GITHUB_ENV
         echo "BUILDDONE=success" >> $GITHUB_ENV
     - name: Upload packages - push to artifact file
       uses: actions/upload-artifact@main
