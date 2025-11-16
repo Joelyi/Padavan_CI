@@ -235,5 +235,5 @@ jobs:
         uses: actions/upload-artifact@master
         if: always()
         with:
-          name: vb1980_$TNAME-Padavan-packages
+          name: vb1980_K1s-Padavan-packages
           path: /opt/images
