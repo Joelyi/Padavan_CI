@@ -18,7 +18,7 @@ on:
       padavanbin:
         type: boolean
         description: '是否替换编译文件'
-        default: 'false'
+        default: 'true'
       config:
         type: boolean
         description: '是否替换配置文件'
