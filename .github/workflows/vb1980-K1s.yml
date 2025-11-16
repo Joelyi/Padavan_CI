@@ -88,7 +88,7 @@ jobs:
       - name: Recovery asp files download from remote
         if: github.event.inputs.padavanbin == 'true'
         run: |
-          #cp -f shared/defaults.c $WORK_PATH/trunk/user/shared/defaults.c
+          cp -f Padavan/shared/defaults.c $WORK_PATH/trunk/user/shared/defaults.c
           echo "复制Padavan文件结束" 
       - name: Recovery bin files download from remote
         if: github.event.inputs.config == 'true'
