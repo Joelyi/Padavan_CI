@@ -4,10 +4,10 @@ name: Build vb1980_K1s repo
 on:
   workflow_dispatch:
     inputs:
-      name:
-        description: "Build Padavan"
+      firmwarever:
+        description: 'firmware''s version'
         required: true
-        default: "build"
+        default: '20201015'
       busyboxver:
         type: choice
         description: 'busybox''s version'
@@ -89,7 +89,7 @@ jobs:
         if: github.event.inputs.config == 'true'
         run: |
           cp -f $TNAME/$TNAME.config $WORK_PATH/trunk/configs/templates/$TNAME.config
-
+          cp -f $TNAME/defaults.h $WORK_PATH/trunk/user/shared/defaults.h
           echo "复制配置文件结束"  
       - name: Recovery theme files download from remote
         if: github.event.inputs.theme == 'true'
