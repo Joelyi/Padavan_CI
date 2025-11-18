@@ -82,6 +82,8 @@ jobs:
           cp -f Padavan/libcurl/Makefile $WORK_PATH/trunk/libs/libcurl/Makefile
           cp -rf Padavan/ipset $WORK_PATH/trunk/user
           cp -rf Padavan/libncurses $WORK_PATH/trunk/libs
+          cd $WORK_PATH/trunk/user/nano
+          sed -i "s#nano-5.9#nano-5.3#g" ./Makefile
       - name: Recovery asp files download from remote
         if: github.event.inputs.padavanbin == 'true'
         run: |
