@@ -76,6 +76,7 @@ jobs:
         if: github.event.inputs.padavanbin == 'true'
         run: |
           sudo rm -rf $WORK_PATH/trunk/user/ipset
+          sudo rm -rf $WORK_PATH/trunk/user/e2fsprogs
           sudo rm -rf $WORK_PATH/trunk/libs/libncurses
           cp -f Padavan/ttyd/Makefile $WORK_PATH/trunk/user/ttyd/Makefile
           cp -f Padavan/socat/Makefile $WORK_PATH/trunk/user/socat/Makefile
@@ -83,6 +84,7 @@ jobs:
           cp -f Padavan/libssl/Makefile $WORK_PATH/trunk/libs/libssl/Makefile
           cp -f Padavan/libcurl/Makefile $WORK_PATH/trunk/libs/libcurl/Makefile
           cp -rf Padavan/ipset $WORK_PATH/trunk/user
+          cp -rf Padavan/e2fsprogs $WORK_PATH/trunk/user
           cp -rf Padavan/libncurses $WORK_PATH/trunk/libs
           cd $WORK_PATH/trunk/user/nano
           sed -i "s#nano-5.9#nano-5.3#g" ./Makefile
