@@ -75,15 +75,17 @@ jobs:
       - name: Recovery Padavan files download from remote
         if: github.event.inputs.padavanbin == 'true'
         run: |
+          sudo rm -rf $WORK_PATH/trunk/user/ipset
+          sudo rm -rf $WORK_PATH/trunk/libs/libncurses
           cp -f Padavan/ttyd/Makefile $WORK_PATH/trunk/user/ttyd/Makefile
           cp -f Padavan/libssl/Makefile $WORK_PATH/trunk/libs/libssl/Makefile
           cp -f Padavan/libcurl/Makefile $WORK_PATH/trunk/libs/libcurl/Makefile
-          sudo rm -rf $WORK_PATH/trunk/user/ipset
           cp -rf Padavan/ipset $WORK_PATH/trunk/user
+          cp -rf Padavan/libncurses $WORK_PATH/trunk/libs
       - name: Recovery asp files download from remote
         if: github.event.inputs.padavanbin == 'true'
         run: |
-          #cp -f Padavan/shared/defaults.c $WORK_PATH/trunk/user/shared/defaults.c
+          cp -f Padavan/shared/defaults.c $WORK_PATH/trunk/user/shared/defaults.c
           echo "复制Padavan文件结束" 
       - name: Recovery bin files download from remote
         if: github.event.inputs.config == 'true'
