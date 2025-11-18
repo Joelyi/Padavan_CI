@@ -78,9 +78,10 @@ jobs:
           sudo rm -rf $WORK_PATH/trunk/user/ipset
           sudo rm -rf $WORK_PATH/trunk/libs/libncurses
           cp -f Padavan/ttyd/Makefile $WORK_PATH/trunk/user/ttyd/Makefile
+          cp -f Padavan/socat/Makefile $WORK_PATH/trunk/user/socat/Makefile
+          cp -f Padavan/iperf3/Makefile $WORK_PATH/trunk/user/iperf3/Makefile
           cp -f Padavan/libssl/Makefile $WORK_PATH/trunk/libs/libssl/Makefile
           cp -f Padavan/libcurl/Makefile $WORK_PATH/trunk/libs/libcurl/Makefile
-          cp -f Padavan/socat/Makefile $WORK_PATH/trunk/user/socat/Makefile
           cp -rf Padavan/ipset $WORK_PATH/trunk/user
           cp -rf Padavan/libncurses $WORK_PATH/trunk/libs
           cd $WORK_PATH/trunk/user/nano
